@@ -1,0 +1,87 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pthread",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/time.o",
+      "src/time.c"
+    ],
+    "directory": "/home/fde-alme/Documents/philo",
+    "file": "/home/fde-alme/Documents/philo/src/time.c",
+    "output": "/home/fde-alme/Documents/philo/build/time.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pthread",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/philo.o",
+      "src/philo.c"
+    ],
+    "directory": "/home/fde-alme/Documents/philo",
+    "file": "/home/fde-alme/Documents/philo/src/philo.c",
+    "output": "/home/fde-alme/Documents/philo/build/philo.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pthread",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/utils.o",
+      "src/utils.c"
+    ],
+    "directory": "/home/fde-alme/Documents/philo",
+    "file": "/home/fde-alme/Documents/philo/src/utils.c",
+    "output": "/home/fde-alme/Documents/philo/build/utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pthread",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/init.o",
+      "src/init.c"
+    ],
+    "directory": "/home/fde-alme/Documents/philo",
+    "file": "/home/fde-alme/Documents/philo/src/init.c",
+    "output": "/home/fde-alme/Documents/philo/build/init.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pthread",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/actions.o",
+      "src/actions.c"
+    ],
+    "directory": "/home/fde-alme/Documents/philo",
+    "file": "/home/fde-alme/Documents/philo/src/actions.c",
+    "output": "/home/fde-alme/Documents/philo/build/actions.o"
+  }
+]
