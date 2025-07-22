@@ -2,8 +2,6 @@
 CC		:= cc
 RM		:= rm -f
 CFLAGS	:= -Wall -Wextra -Werror -pthread -fsanitize=thread -g
-#CFLAGS	:= -Wall -Wextra -Werror -pthread -g
-DEBUG	:= $(CFLAGS) -g
 
 # Names
 NAME	:= philo
@@ -33,10 +31,6 @@ OBJS	:= $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 
 # Rules
 all: $(NAME)
-
-debug: fclean $(OBJS)
-	@$(CC) $(DEBUG) $(OBJS) -o $(NAME)
-	@printf "$(GREEN)$@ compiled! $(DEF_COLOR)\n"
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $^ -o $(NAME)

@@ -29,3 +29,30 @@ void	init_data(t_table *table, char *argv[])
 	}
 }
 
+// TODO: Lone philosopher
+void	init_threads(t_table *table)
+{
+	t_philo	*philo;
+	int		status;
+	int		i;
+
+	i = -1;
+	while (++i < table->n_philos)
+	{
+		philo = &table->philos[i];
+		if (DEBUG == 1)
+		status = pthread_create(&philo->thread,
+				NULL, philo_routine_debug, (void *) philo);
+		else
+			status = pthread_create(&philo->thread,
+					NULL, philo_routine, (void *) philo);
+		if (status != 0)
+		{
+			free_table(table);
+			exit_error("Failed to create thread");
+		}
+	}
+	table->times.start_time = now_in_ms();
+	set_bool(&table->table_mutex, &table->threads_ready, TRUE);
+}
+

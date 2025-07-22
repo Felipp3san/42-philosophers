@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 18:50:14 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:17:28 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:51:34 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define MUTEX_ERROR - 1
 # define ERROR -1
 # define SUCCESS 0
+
+# define DEBUG 1
 
 # define RESET "\033[0m"
 # define BLACK "\033[1;30m"
@@ -50,10 +52,12 @@ typedef enum e_arg_index
 typedef enum e_state
 {
 	TAKEN_FORK,
+	TAKEN_SECOND_FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
-	DEAD
+	DEAD,
+	FULL
 }	t_state;
 
 typedef enum e_bool
@@ -68,7 +72,7 @@ typedef unsigned long long t_ull;
 
 typedef struct s_fork
 {
-	size_t	id;
+	int		id;
 	t_mutex	fork_mutex;
 }	t_fork;
 
@@ -105,7 +109,8 @@ struct s_table
 	t_fork		*forks;
 	t_times		times;
 	t_mutex		table_mutex;
-	pthread_t	monitor;
+	pthread_t	death_monitor;
+	pthread_t	meal_monitor;
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:21:18 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:58:00 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 // main.c
 void	free_table(t_table *table);
 
+// routine.c
+void	*philo_routine(void *philosopher);
+void	*philo_routine_debug(void *philosopher);
+
 // time.c
 t_ull	time_to_msec(struct timeval *time);
 t_ull	time_to_usec(struct timeval *time);
@@ -30,6 +34,7 @@ void	ft_usleep(t_ull usec);
 
 // init.c
 void	init_data(t_table *table, char *argv[]);
+void	init_threads(t_table *table);
 
 // syncro_utils.c
 t_bool	all_threads_ready(t_table *table);
@@ -66,8 +71,8 @@ void	p_eat(t_philo *philo);
 void	p_think(t_philo *philo);
 void	p_sleep(t_philo *philo);
 
-// monitor.c
-void	init_monitor(pthread_t *monitor, t_table *table);
+//monitor.c
+void	init_monitor(t_table *table);
 
 // getters.c
 int		get_int(t_mutex *mutex, int *target);
