@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:07:38 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:19:21 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:26:26 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*philo_routine(void *philosopher)
 	philo = (t_philo *) philosopher;
 	table = (t_table *) philo->table;
 	while (!all_threads_ready(table))
-		usleep(100);
+		ft_usleep(100);
 	increase_int(&table->table_mutex, &table->threads_running);
 	while (!all_threads_running(table))
 		;

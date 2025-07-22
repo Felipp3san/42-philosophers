@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 19:04:38 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:21:11 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:31:35 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,10 @@ t_ull	now_in_usec(void)
 void	ft_usleep(t_ull usec)
 {
 	t_ull	start;
-	t_ull	elapsed;
-	t_ull	rem;
 
 	start = now_in_usec();
+	if (usec >= 2e3)
+		usleep(usec - 1000);
 	while (now_in_usec() - start < usec)
-	{
-		elapsed = now_in_usec() - start;
-		rem = usec - elapsed;
-		if (rem > 1e3)
-			usleep(rem / 2);
-		else
-		{
-			while (now_in_usec() - start < usec)
-				;
-		}
-	}
+		;
 }
