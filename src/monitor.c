@@ -6,14 +6,14 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/12 20:16:48 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/13 22:23:15 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:18:56 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	*death_monitor(void	*table);
-static bool	is_dead(t_philo *philo);
+static t_bool	is_dead(t_philo *philo);
 
 void	init_monitor(pthread_t *monitor, t_table *table)
 {
@@ -27,29 +27,26 @@ void	init_monitor(pthread_t *monitor, t_table *table)
 	}
 }
 
-static bool	is_dead(t_philo *philo)
+static t_bool	is_dead(t_philo *philo)
 {
 	size_t	elapsed;
 
-	elapsed = now_in_ms() - get_size_t(&philo->meal_mutex, &philo->last_meal_time);
-	if (elapsed > philo->table->time_to_die)
-		return (true);
+	elapsed = now_in_ms() - get_ull(&philo->meal_mutex, &philo->last_meal);
+	if (elapsed > philo->times->time_to_die)
+		return (TRUE);
 	else
-		return (false);
+		return (FALSE);
 }
 
-// TODO: Wait for all threads to start
 static void	*death_monitor(void	*data)
 {
 	t_table	*table;
 	t_philo	*philo;
-	ssize_t	i;
-
-	// Wait here
-	//
-	// ________
+	int		i;
 
 	table = (t_table *) data;
+	while (!all_threads_running(table))
+		;
 	while (!simulation_finished(table))
 	{
 		i = -1;
@@ -58,7 +55,7 @@ static void	*death_monitor(void	*data)
 			philo = (t_philo *) &table->philos[i];
 			if (is_dead(philo))
 			{
-				set_bool(&table->simulation_mutex, &table->finished, true);
+				set_bool(&table->table_mutex, &table->finished, TRUE);
 				write_status(philo, DEAD);
 			}
 		}

@@ -1,8 +1,8 @@
 # Variables
 CC		:= cc
 RM		:= rm -f
-#CFLAGS	:= -Wall -Wextra -Werror -pthread -fsanitize=thread -g
-CFLAGS	:= -Wall -Wextra -Werror -pthread -g
+CFLAGS	:= -Wall -Wextra -Werror -pthread -fsanitize=thread -g
+#CFLAGS	:= -Wall -Wextra -Werror -pthread -g
 DEBUG	:= $(CFLAGS) -g
 
 # Names

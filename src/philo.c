@@ -6,12 +6,13 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:07:38 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/13 22:53:29 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:19:21 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <pthread.h>
+#include <unistd.h>
 
 // TODO: Full philosopher
 void	*philo_routine(void *philosopher)
@@ -21,6 +22,11 @@ void	*philo_routine(void *philosopher)
 
 	philo = (t_philo *) philosopher;
 	table = (t_table *) philo->table;
+	while (!all_threads_ready(table))
+		usleep(100);
+	increase_int(&table->table_mutex, &table->threads_running);
+	while (!all_threads_running(table))
+		;
 	while (!simulation_finished(table))
 	{
 		p_eat(philo);
@@ -31,13 +37,11 @@ void	*philo_routine(void *philosopher)
 }
 
 // TODO: Lone philosopher
-// TODO: Sync thread to start simultaneous
-// TODO: Join all threads
 void	init_threads(t_table *table)
 {
 	t_philo	*philo;
-	ssize_t	i;
 	int		status;
+	int		i;
 
 	i = -1;
 	while (++i < table->n_philos)
@@ -51,6 +55,8 @@ void	init_threads(t_table *table)
 			exit_error("Failed to create thread");
 		}
 	}
+	table->times.start_time = now_in_ms();
+	set_bool(&table->table_mutex, &table->threads_ready, TRUE);
 }
 
 void	free_table(t_table *table)
@@ -81,7 +87,7 @@ int	main(int argc, char *argv[])
 {
 	t_table		table;
 	pthread_t	monitor;
-	ssize_t		i;
+	int			i;
 
 	if (argc < ARG_MIN_COUNT || argc > ARG_MAX_COUNT)
 		exit_error("Invalid number of parameters");

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:03:22 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/13 14:15:49 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:17:37 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ int init_philosophers(t_table *table)
 	{
 		philo = &table->philos[i];
 		philo->id = i + 1;
-		philo->last_meal_time = table->start_time;
+		philo->last_meal = table->times.start_time;
 		philo->meals_eaten = 0;
 		philo->table = table;
+		philo->times = &table->times;
 		assign_forks(philo);
 	}
 	return (SUCCESS);

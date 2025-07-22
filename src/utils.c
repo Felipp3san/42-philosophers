@@ -6,14 +6,14 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 15:36:32 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/10 22:46:33 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/22 19:03:34 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	ft_isdigit(int c);
-static bool	ft_isspace(int c);
+static t_bool	ft_isdigit(int c);
+static t_bool	ft_isspace(int c);
 
 void	exit_error(const char *msg)
 {
@@ -47,38 +47,38 @@ int	ft_atoi(const char *nptr)
 	return (nbr * sign);
 }
 
-bool	is_valid_number(char *str)
+t_bool	is_valid_number(char *str)
 {
 	int	i;
 
 	if (!str || *str == '\0')
-		return (false);
+		return (FALSE);
 	i = 0;
 	if (str[i] == '+')
 		i++;
 	if (str[i] == '\0')
-		return (false);
+		return (FALSE);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (false);
+			return (FALSE);
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
 
-static bool	ft_isspace(int c)
+static t_bool	ft_isspace(int c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
-		return (true);
+		return (TRUE);
 	else
-		return (false);
+		return (FALSE);
 }
 
-static bool	ft_isdigit(int c)
+static t_bool	ft_isdigit(int c)
 {
 	if (c >= 48 && c <= 57)
-		return (true);
+		return (TRUE);
 	else
-		return (false);
+		return (FALSE);
 }
