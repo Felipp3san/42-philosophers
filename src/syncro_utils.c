@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:50:18 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:02:45 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:58:16 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_bool	all_threads_ready(t_table *table)
 
 t_bool	all_threads_running(t_table *table)
 {
-	if (table->n_philos == get_int(&table->table_mutex, &table->threads_running))
+	int	threads_running;
+
+	threads_running = get_int(&table->table_mutex, &table->threads_running);
+	if (table->n_philos == threads_running)
 		return (TRUE);
 	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:03:22 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:17:37 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:26:35 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,9 @@
 
 static void	assign_forks(t_philo *philo);
 
-int	init_all_philos(t_table *table)
+int	init_philosophers(t_table *table)
 {
-	if (init_philosophers(table) == MALLOC_ERROR)
-		return (MALLOC_ERROR);
-	if (init_philosophers_mutexes(table) == MUTEX_ERROR)
-	{
-		free(table->philos);
-		return (MUTEX_ERROR);
-	}
-	return (SUCCESS);
-}
-
-int init_philosophers(t_table *table)
-{
-	ssize_t	i;
+	int		i;
 	t_philo	*philo;
 
 	table->philos = (t_philo *) malloc(sizeof(t_philo) * table->n_philos);
@@ -49,10 +37,10 @@ int init_philosophers(t_table *table)
 	return (SUCCESS);
 }
 
-int init_philosophers_mutexes(t_table *table)
+int	init_philosophers_mutexes(t_table *table)
 {
-	ssize_t	i;
-	int		status;
+	int	i;
+	int	status;
 
 	i = -1;
 	while (++i < table->n_philos)
@@ -80,7 +68,7 @@ int init_philosophers_mutexes(t_table *table)
 
 void	destroy_philosophers_mutexes(t_table *table)
 {
-	ssize_t	i;
+	int	i;
 
 	if (!table)
 		return ;

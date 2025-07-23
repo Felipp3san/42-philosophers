@@ -6,21 +6,13 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 13:04:54 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:18:04 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:27:11 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_all_table(t_table *table, char *argv[])
-{
-	init_table(table, argv);
-	if (init_table_mutexes(table) == MUTEX_ERROR)
-		return (MUTEX_ERROR);
-	return (SUCCESS);
-}
-
-void init_table(t_table *table, char *argv[])
+void	init_table(t_table *table, char *argv[])
 {
 	table->threads_running = 0;
 	table->threads_ready = FALSE;
@@ -38,7 +30,7 @@ void init_table(t_table *table, char *argv[])
 
 int	init_table_mutexes(t_table *table)
 {
-	int		status;
+	int	status;
 
 	status = pthread_mutex_init(&table->table_mutex, NULL);
 	if (status != 0)

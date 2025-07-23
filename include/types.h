@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 18:50:14 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:51:34 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:08:20 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ typedef enum e_bool
 	TRUE	
 }	t_bool;
 
-typedef	struct s_table t_table;
-typedef pthread_mutex_t t_mutex;
-typedef unsigned long long t_ull;
+typedef struct s_table		t_table;
+typedef pthread_mutex_t		t_mutex;
+typedef unsigned long long	t_ull;
 
 typedef struct s_fork
 {

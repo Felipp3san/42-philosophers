@@ -6,14 +6,35 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 15:36:32 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:03:34 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:35:48 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_bool	ft_isdigit(int c);
-static t_bool	ft_isspace(int c);
+void	check_params(char *argv[])
+{
+	if (!is_valid_number(argv[1]) || ft_atoi(argv[1]) <= 0)
+		exit_error("Invalid number of philosophers");
+	if (!is_valid_number(argv[2]) || ft_atoi(argv[2]) <= 0)
+		exit_error("Invalid time to die");
+	if (!is_valid_number(argv[3]) || ft_atoi(argv[3]) <= 0)
+		exit_error("Invalid time to eat");
+	if (!is_valid_number(argv[4]) || ft_atoi(argv[4]) <= 0)
+		exit_error("Invalid time to sleep");
+	if (argv[5])
+	{
+		if (!is_valid_number(argv[5]) || ft_atoi(argv[5]) <= 0)
+			exit_error("Invalid number of meals");
+	}
+}
+
+void	free_table(t_table *table)
+{
+	clean_table(table);
+	clean_forks(table);
+	clean_philosophers(table);
+}
 
 void	exit_error(const char *msg)
 {
@@ -21,64 +42,11 @@ void	exit_error(const char *msg)
 	exit(EXIT_FAILURE);
 }
 
-int	ft_atoi(const char *nptr)
+void	log_debug(const char *color, const char *msg)
 {
-	int		nbr;
-	int		sign;
-	size_t	i;
-
-	sign = 1;
-	nbr = 0;
-	i = 0;
-	while (ft_isspace(nptr[i]))
-		i++;
-	if (nptr[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	else if (nptr[i] == '+')
-		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		nbr = (nbr * 10) + (nptr[i] - '0');
-		i++;
-	}
-	return (nbr * sign);
-}
-
-t_bool	is_valid_number(char *str)
-{
-	int	i;
-
-	if (!str || *str == '\0')
-		return (FALSE);
-	i = 0;
-	if (str[i] == '+')
-		i++;
-	if (str[i] == '\0')
-		return (FALSE);
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
-
-static t_bool	ft_isspace(int c)
-{
-	if ((c >= 9 && c <= 13) || c == 32)
-		return (TRUE);
-	else
-		return (FALSE);
-}
-
-static t_bool	ft_isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (TRUE);
-	else
-		return (FALSE);
+	if (DEBUG != 1)
+		return ;
+	printf("%s[DEBUG] ", color);
+	printf("%s", msg);
+	printf(RESET"\n");
 }
