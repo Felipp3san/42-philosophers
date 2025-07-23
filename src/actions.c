@@ -6,12 +6,11 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:29:54 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 13:06:26 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:49:24 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
 
 static int	safe_lock(t_mutex *mutex, t_table *table)
 {

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 13:35:34 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:14:43 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	join_threads(t_table	*table);
 void	init_threads(t_table *table);
 
 // routine.c
+void	*lone_philo_routine(void *philosopher);
 void	*philo_routine(void *philosopher);
 
 // time_utils.c
@@ -74,6 +75,9 @@ void	p_sleep(t_philo *philo);
 
 // monitor.c
 void	init_monitor(t_table *table);
+
+// monitor_utils.c
+void	verify(t_table *table, t_philo *philo);
 
 // getters.c
 int		get_int(t_mutex *mutex, int *target);

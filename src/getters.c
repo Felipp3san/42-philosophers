@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:38:43 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 12:24:01 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:40:38 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_int(t_mutex *mutex, int *target)
 
 t_ull	get_ull(t_mutex *mutex, t_ull *target)
 {
-	size_t	value;
+	t_ull	value;
 
 	pthread_mutex_lock(mutex);
 	value = *target;
