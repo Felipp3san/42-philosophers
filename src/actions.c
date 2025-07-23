@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 17:29:54 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:25:47 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:01:12 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	p_eat(t_philo *philo)
 	write_status(philo, TAKEN_FORK);
 	pthread_mutex_lock(&philo->second_fork->fork_mutex);
 	write_status(philo, TAKEN_SECOND_FORK);
-	write_status(philo, EATING);
 	set_ull(&philo->meal_mutex, &philo->last_meal, now_in_ms());
 	increase_int(&philo->meal_mutex, &philo->meals_eaten);
+	write_status(philo, EATING);
 	if (philo->meals_eaten == philo->table->meals_to_eat)
 	{
-		set_bool(&philo->table->table_mutex, &philo->table->finished, TRUE);
+		set_bool(&philo->meal_mutex, &philo->is_full, TRUE);
 		write_status(philo, FULL);
 	}
 	ft_usleep(msec_to_usec(philo->times->time_to_eat));

@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 22:14:18 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/13 13:49:00 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:56:20 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ void	init_threads(t_table *table)
 	while (++i < table->n_philos)
 	{
 		philo = &table->philos[i];
-		if (DEBUG == 1)
-		status = pthread_create(&philo->thread,
-				NULL, philo_routine_debug, (void *) philo);
-		else
-			status = pthread_create(&philo->thread,
-					NULL, philo_routine, (void *) philo);
+		status = pthread_create(&philo->thread, NULL, philo_routine, (void *) philo);
 		if (status != 0)
 		{
 			free_table(table);

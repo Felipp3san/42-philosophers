@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 22:14:55 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:20:06 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:57:21 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	write_status_debug(t_philo *philo, t_state state)
 	else if (state == DEAD)
 		printf(WHITE"%llu"RED"💀💀 %d died 💀💀"RESET"\n", timestamp, philo->id);
 	else if (state == FULL)
-		printf(GREEN"[DEBUG] 🐷🐷 Full philosopher found, stopping threads... 🐷🐷 "RESET
+		printf(GREEN"[DEBUG] 🐷🐷 Full philosopher found, stopping thread... 🐷🐷 "RESET
 			"[Philosopher ID: %d - Meals Eaten: %d]\n", philo->id, philo->meals_eaten);
 	pthread_mutex_unlock(&philo->write_mutex);
 }

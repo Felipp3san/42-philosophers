@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   death_monitor.c                                    :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:55:37 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:57:45 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:00:00 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_bool	is_dead(t_philo *philo);
-static void		*death_monitor(void	*data);
-static void		*death_monitor_debug(void	*data);
+static t_bool	is_full(t_philo *philo);
+static t_bool	all_philos_full(t_table *table);
+static void		*monitor(void	*data);
 
 void	init_monitor(t_table *table)
 {
 	int	status;
 
-	if (DEBUG == 1)
-		status = pthread_create(&table->death_monitor, NULL, death_monitor_debug, (void *) table);
-	else
-		status = pthread_create(&table->death_monitor, NULL, death_monitor, (void *) table);
+	status = pthread_create(&table->death_monitor, NULL, monitor, (void *) table);
 	if (status != 0)
 	{
 		free_table(table);
@@ -31,57 +29,59 @@ void	init_monitor(t_table *table)
 	}
 }
 
-static void	*death_monitor(void	*data)
+static void	*monitor(void	*data)
 {
 	t_table	*table;
 	t_philo	*philo;
 	int		i;
 
 	table = (t_table *) data;
+	if (DEBUG == 1)
+		printf(YELLOW"[DEBUG] Monitor ready!"RESET"\n");
 	while (!all_threads_running(table))
 		;
+	if (DEBUG == 1)
+		printf(GREEN"[DEBUG] Monitor started!"RESET"\n");
 	while (!simulation_finished(table))
 	{
 		i = -1;
 		while (++i < table->n_philos && !simulation_finished(table))
 		{
 			philo = (t_philo *) &table->philos[i];
-			if (is_dead(philo))
+			if (!is_full(philo) && is_dead(philo))
 			{
+				if (DEBUG == 1)
+					printf(RED"[DEBUG] Dead philosopher found, stopping threads..."RESET"\n");
 				set_bool(&table->table_mutex, &table->finished, TRUE);
 				write_status(philo, DEAD);
+			}
+			else if (all_philos_full(table))
+			{
+				if (DEBUG == 1)
+					printf(GREEN"[DEBUG] All philosophers are full, stopping simulation..."RESET"\n");
+				set_bool(&table->table_mutex, &table->finished, TRUE);
 			}
 		}
 	}
 	return (NULL);
 }
 
-static void	*death_monitor_debug(void	*data)
+static t_bool	all_philos_full(t_table *table)
 {
-	t_table	*table;
-	t_philo	*philo;
-	int		i;
+	int	i;
 
-	table = (t_table *) data;
-	printf(YELLOW"[DEBUG] Death monitor ready!"RESET"\n");
-	while (!all_threads_running(table))
-		;
-	printf(GREEN"[DEBUG] Death monitor started!"RESET"\n");
-	while (!simulation_finished(table))
+	i = -1;
+	while (++i < table->n_philos)
 	{
-		i = -1;
-		while (++i < table->n_philos && !simulation_finished(table))
-		{
-			philo = (t_philo *) &table->philos[i];
-			if (is_dead(philo))
-			{
-				printf(RED"[DEBUG] Dead philosopher found, stopping threads..."RESET"\n");
-				set_bool(&table->table_mutex, &table->finished, TRUE);
-				write_status(philo, DEAD);
-			}
-		}
+		if (!is_full(&table->philos[i]))
+			return (FALSE);
 	}
-	return (NULL);
+	return (TRUE);
+}
+
+static t_bool	is_full(t_philo *philo)
+{
+	return (get_bool(&philo->meal_mutex, &philo->is_full));
 }
 
 static t_bool	is_dead(t_philo *philo)

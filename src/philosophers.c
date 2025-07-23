@@ -41,6 +41,7 @@ int init_philosophers(t_table *table)
 		philo->id = i + 1;
 		philo->last_meal = table->times.start_time;
 		philo->meals_eaten = 0;
+		philo->is_full = FALSE;
 		philo->table = table;
 		philo->times = &table->times;
 		assign_forks(philo);

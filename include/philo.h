@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/22 19:58:00 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:59:44 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_table(t_table *table);
 
 // routine.c
 void	*philo_routine(void *philosopher);
-void	*philo_routine_debug(void *philosopher);
 
 // time.c
 t_ull	time_to_msec(struct timeval *time);

@@ -88,6 +88,7 @@ typedef struct s_philo
 {
 	int			id;
 	int			meals_eaten;
+	t_bool		is_full;
 	t_ull		last_meal;
 	t_fork		*first_fork;
 	t_fork		*second_fork;
