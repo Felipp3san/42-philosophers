@@ -19,10 +19,11 @@ void	join_threads(t_table	*table)
 	i = -1;
 	while (++i < table->n_philos)
 		pthread_join(table->philos[i].thread, NULL);
-	pthread_join(table->death_monitor, NULL);
+	pthread_join(table->monitor, NULL);
 }
 
-void	init_threads(t_table *table)
+// TODO: Join threads in failure (Including monitor).
+void	init_philos_threads(t_table *table)
 {
 	t_philo	*philo;
 	int		status;
@@ -44,6 +45,17 @@ void	init_threads(t_table *table)
 			exit_error("Failed to create thread");
 		}
 	}
-	table->times.start_time = now_in_ms();
-	set_bool(&table->table_mutex, &table->threads_ready, TRUE);
+}
+
+void	init_monitor_thread(t_table *table)
+{
+	int	status;
+
+	status = pthread_create(&table->monitor,
+			NULL, monitor, (void *) table);
+	if (status != 0)
+	{
+		free_table(table);
+		exit_error("Failed to create monitor thread");
+	}
 }

@@ -19,13 +19,7 @@ void	*lone_philo_routine(void *philosopher)
 
 	philo = (t_philo *) philosopher;
 	table = (t_table *) philo->table;
-	if (DEBUG == 1)
-		printf(YELLOW"[DEBUG] Philosopher %d ready!"RESET"\n", philo->id);
-	while (!all_threads_ready(table))
-		;
-	increase_int(&table->table_mutex, &table->threads_running);
-	if (DEBUG == 1)
-		printf(GREEN"[DEBUG] Philosopher %d started!"RESET"\n", philo->id);
+	log_debug(table, GREEN, "Philosopher started!", &philo->id);
 	pthread_mutex_lock(&philo->first_fork->fork_mutex);
 	write_status(philo, TAKEN_FORK);
 	ft_usleep(msec_to_usec(philo->times->time_to_die));
@@ -40,15 +34,7 @@ void	*philo_routine(void *philosopher)
 
 	philo = (t_philo *) philosopher;
 	table = (t_table *) philo->table;
-	if (DEBUG == 1)
-		printf(YELLOW"[DEBUG] Philosopher %d ready!"RESET"\n", philo->id);
-	while (!all_threads_ready(table))
-		;
-	increase_int(&table->table_mutex, &table->threads_running);
-	if (DEBUG == 1)
-		printf(GREEN"[DEBUG] Philosopher %d started!"RESET"\n", philo->id);
-	while (!all_threads_running(table))
-		;
+	log_debug(table, GREEN, "Philosopher started!", &philo->id);
 	while (!simulation_finished(table))
 	{
 		p_eat(philo);

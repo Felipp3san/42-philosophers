@@ -30,7 +30,7 @@ static void	write_status_internal(t_philo *philo, t_state state)
 
 	table = philo->table;
 	timestamp = now_in_ms() - table->times.start_time;
-	pthread_mutex_lock(&philo->write_mutex);
+	pthread_mutex_lock(&table->write_mutex);
 	if ((state == TAKEN_FORK || state == TAKEN_SECOND_FORK)
 		&& !simulation_finished(table))
 		printf(WHITE"%llu"RESET" %d has taken a fork\n", timestamp, philo->id);
@@ -42,7 +42,7 @@ static void	write_status_internal(t_philo *philo, t_state state)
 		printf(WHITE"%llu"RESET" %d is sleeping\n", timestamp, philo->id);
 	else if (state == DEAD)
 		printf(WHITE"%llu"RED" %d died"RESET"\n", timestamp, philo->id);
-	pthread_mutex_unlock(&philo->write_mutex);
+	pthread_mutex_unlock(&table->write_mutex);
 }
 
 static void	write_status_debug(t_philo *philo, t_state state)
@@ -52,7 +52,7 @@ static void	write_status_debug(t_philo *philo, t_state state)
 
 	ts = now_in_ms() - philo->table->times.start_time;
 	meals = get_int(&philo->meal_mutex, &philo->meals_eaten);
-	pthread_mutex_lock(&philo->write_mutex);
+	pthread_mutex_lock(&philo->table->write_mutex);
 	if (state == TAKEN_FORK)
 		printf(WHITE"%llu"RESET" %d took 1st fork🍴 "MAGENTA"[ID: %d]"RESET"\n",
 			ts, philo->id, philo->first_fork->id);
@@ -71,5 +71,5 @@ static void	write_status_debug(t_philo *philo, t_state state)
 	else if (state == FULL)
 		printf(GREEN"[DEBUG] 🐷 Full: ID %d, Meals %d"RESET"\n",
 			philo->id, meals);
-	pthread_mutex_unlock(&philo->write_mutex);
+	pthread_mutex_unlock(&philo->table->write_mutex);
 }

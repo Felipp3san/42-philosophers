@@ -25,7 +25,7 @@
 # define ERROR -1
 # define SUCCESS 0
 
-# define DEBUG 1
+# define DEBUG 0
 
 # define RESET "\033[0m"
 # define BLACK "\033[1;30m"
@@ -95,7 +95,6 @@ typedef struct s_philo
 	t_times		*times;
 	t_table		*table;
 	t_mutex		meal_mutex;
-	t_mutex		write_mutex;
 	pthread_t	thread;
 }	t_philo;
 
@@ -103,15 +102,13 @@ struct s_table
 {
 	int			n_philos;
 	int			meals_to_eat;
-	int			threads_running;
-	t_bool		threads_ready;
 	t_bool		finished;
 	t_philo		*philos;
 	t_fork		*forks;
 	t_times		times;
 	t_mutex		table_mutex;
-	pthread_t	death_monitor;
-	pthread_t	meal_monitor;
+	t_mutex		write_mutex;
+	pthread_t	monitor;
 };
 
 #endif

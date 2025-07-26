@@ -12,22 +12,8 @@
 
 #include "philo.h"
 
-static int	safe_lock(t_mutex *mutex, t_table *table)
-{
-	pthread_mutex_lock(mutex);
-	if (simulation_finished(table))
-	{
-		pthread_mutex_unlock(mutex);
-		return (0);
-	}
-	return (1);
-}
-
-static void	update_last_meal(t_philo *philo)
-{
-	set_ull(&philo->meal_mutex, &philo->last_meal, now_in_ms());
-	increase_int(&philo->meal_mutex, &philo->meals_eaten);
-}
+static int	safe_lock(t_mutex *mutex, t_table *table);
+static void	update_last_meal(t_philo *philo);
 
 void	p_eat(t_philo *philo)
 {
@@ -55,10 +41,29 @@ void	p_eat(t_philo *philo)
 void	p_think(t_philo *philo)
 {
 	write_status(philo, THINKING);
+	if (philo->table->n_philos % 2 != 0)
+		ft_usleep(msec_to_usec(philo->times->time_to_eat * 2 - philo->times->time_to_sleep));
 }
 
 void	p_sleep(t_philo *philo)
 {
 	write_status(philo, SLEEPING);
 	ft_usleep(msec_to_usec(philo->times->time_to_sleep));
+}
+
+static int	safe_lock(t_mutex *mutex, t_table *table)
+{
+	pthread_mutex_lock(mutex);
+	if (simulation_finished(table))
+	{
+		pthread_mutex_unlock(mutex);
+		return (0);
+	}
+	return (1);
+}
+
+static void	update_last_meal(t_philo *philo)
+{
+	set_ull(&philo->meal_mutex, &philo->last_meal, now_in_ms());
+	increase_int(&philo->meal_mutex, &philo->meals_eaten);
 }

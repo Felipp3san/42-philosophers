@@ -52,16 +52,6 @@ int	init_philosophers_mutexes(t_table *table)
 				pthread_mutex_destroy(&table->philos[i].meal_mutex);
 			return (MUTEX_ERROR);
 		}
-		status = pthread_mutex_init(&table->philos[i].write_mutex, NULL);
-		if (status != 0)
-		{
-			while (--i >= 0)
-			{
-				pthread_mutex_destroy(&table->philos[i].meal_mutex);
-				pthread_mutex_destroy(&table->philos[i].write_mutex);
-			}
-			return (MUTEX_ERROR);
-		}
 	}
 	return (SUCCESS);
 }
@@ -74,10 +64,7 @@ void	destroy_philosophers_mutexes(t_table *table)
 		return ;
 	i = -1;
 	while (++i < table->n_philos)
-	{
 		pthread_mutex_destroy(&table->philos[i].meal_mutex);
-		pthread_mutex_destroy(&table->philos[i].write_mutex);
-	}
 }
 
 void	clean_philosophers(t_table *table)

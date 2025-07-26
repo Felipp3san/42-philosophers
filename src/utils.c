@@ -42,11 +42,16 @@ void	exit_error(const char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	log_debug(const char *color, const char *msg)
+/* arg must be and int, an ID for example... */
+void	log_debug(t_table *table, const char *color, const char *msg, int *id)
 {
 	if (DEBUG != 1)
 		return ;
+	pthread_mutex_lock(&table->write_mutex);
 	printf("%s[DEBUG] ", color);
 	printf("%s", msg);
+	if (id != NULL)
+		printf(" [ID: %d]", *id);
 	printf(RESET"\n");
+	pthread_mutex_unlock(&table->write_mutex);
 }

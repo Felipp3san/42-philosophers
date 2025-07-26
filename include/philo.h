@@ -21,7 +21,7 @@
 void	check_params(char *argv[]);
 void	free_table(t_table *table);
 void	exit_error(const char *msg);
-void	log_debug(const char *color, const char *msg);
+void	log_debug(t_table *table, const char *color, const char *msg, int *arg);
 
 // extra_functions.c
 void	ft_usleep(t_ull usec);
@@ -29,8 +29,9 @@ int		ft_atoi(const char *nptr);
 t_bool	is_valid_number(char *str);
 
 // threads.c
-void	join_threads(t_table	*table);
-void	init_threads(t_table *table);
+void	join_threads(t_table *table);
+void	init_philos_threads(t_table *table);
+void	init_monitor_thread(t_table *table);
 
 // routine.c
 void	*lone_philo_routine(void *philosopher);
@@ -74,10 +75,7 @@ void	p_think(t_philo *philo);
 void	p_sleep(t_philo *philo);
 
 // monitor.c
-void	init_monitor(t_table *table);
-
-// monitor_utils.c
-void	verify(t_table *table, t_philo *philo);
+void	*monitor(void *data);
 
 // getters.c
 int		get_int(t_mutex *mutex, int *target);
