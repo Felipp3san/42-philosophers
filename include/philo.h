@@ -21,7 +21,7 @@
 void	check_params(char *argv[]);
 void	free_table(t_table *table);
 void	exit_error(const char *msg);
-void	log_debug(t_table *table, const char *color, const char *msg, int *arg);
+void	log_debug(t_table *table, const char *color, const char *msg, int *id);
 
 // extra_functions.c
 void	ft_usleep(t_ull usec);
