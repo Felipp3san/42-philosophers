@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 18:50:14 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 12:08:20 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:13:17 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,12 @@ struct s_table
 {
 	int			n_philos;
 	int			meals_to_eat;
+	t_bool		thread_failure;
 	t_bool		finished;
 	t_philo		*philos;
 	t_fork		*forks;
 	t_times		times;
+	t_mutex		threads_ready;
 	t_mutex		table_mutex;
 	t_mutex		write_mutex;
 	pthread_t	monitor;

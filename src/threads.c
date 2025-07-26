@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:30:30 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 13:56:47 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:29:43 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,35 @@ void	join_threads(t_table	*table)
 	pthread_join(table->monitor, NULL);
 }
 
-// TODO: Join threads in failure (Including monitor).
 void	init_philos_threads(t_table *table)
 {
-	t_philo	*philo;
 	int		status;
 	int		i;
 
 	i = -1;
+	pthread_mutex_lock(&table->threads_ready);
 	while (++i < table->n_philos)
 	{
-		philo = &table->philos[i];
 		if (table->n_philos == 1)
-			status = pthread_create(&philo->thread, NULL,
-					lone_philo_routine, (void *) philo);
+			status = pthread_create(&table->philos[i].thread, NULL,
+					lone_philo_routine, (void *) &table->philos[i].thread);
 		else
-			status = pthread_create(&philo->thread, NULL,
-					philo_routine, (void *) philo);
+			status = pthread_create(&table->philos[i].thread, NULL,
+					philo_routine, (void *) &table->philos[i].thread);
 		if (status != 0)
 		{
+			set_bool(&table->table_mutex, &table->thread_failure, TRUE);
+			pthread_mutex_unlock(&table->threads_ready);
+			while (--i >= 0)
+				pthread_join(table->philos[i].thread, NULL);
 			free_table(table);
 			exit_error("Failed to create thread");
 		}
 	}
+	pthread_mutex_unlock(&table->threads_ready);
 }
 
+// TODO: If monitor fails, it should join all philo threads.
 void	init_monitor_thread(t_table *table)
 {
 	int	status;

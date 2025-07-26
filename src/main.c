@@ -20,8 +20,8 @@ int	main(int argc, char *argv[])
 		exit_error("Invalid number of parameters");
 	check_params(argv);
 	init_data(&table, argv);
-	init_monitor_thread(&table);
 	init_philos_threads(&table);
+	init_monitor_thread(&table);
 	join_threads(&table);
 	free_table(&table);
 	return (EXIT_SUCCESS);

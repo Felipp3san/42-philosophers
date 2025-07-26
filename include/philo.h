@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:12:16 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 14:14:43 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:20:23 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ t_ull	msec_to_usec(t_ull time_in_ms);
 // init.c
 void	init_data(t_table *table, char *argv[]);
 
-// syncro_utils.c
-t_bool	all_threads_ready(t_table *table);
-t_bool	all_threads_running(t_table *table);
-
 // table.c
 void	init_table(t_table *table, char *argv[]);
 int		init_table_mutexes(t_table *table);
@@ -82,6 +78,7 @@ int		get_int(t_mutex *mutex, int *target);
 t_ull	get_ull(t_mutex *mutex, t_ull *target);
 t_bool	get_bool(t_mutex *mutex, t_bool *target);
 t_bool	simulation_finished(t_table *table);
+t_bool	thread_creation_failed(t_table *table);
 
 // setters.c
 void	set_int(t_mutex *mutex, int *dest, int value);

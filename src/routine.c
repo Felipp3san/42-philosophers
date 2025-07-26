@@ -6,7 +6,7 @@
 /*   By: fde-alme <fde-alme@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:50:38 by fde-alme          #+#    #+#             */
-/*   Updated: 2025/07/23 13:52:31 by fde-alme         ###   ########.fr       */
+/*   Updated: 2025/07/26 18:21:28 by fde-alme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	*philo_routine(void *philosopher)
 
 	philo = (t_philo *) philosopher;
 	table = (t_table *) philo->table;
+	log_debug(table, GREEN, "Philosopher ready!", &philo->id);
+	pthread_mutex_lock(&table->threads_ready);
+	pthread_mutex_unlock(&table->threads_ready);
+	if (thread_creation_failed(table))
+		return (NULL);
 	log_debug(table, GREEN, "Philosopher started!", &philo->id);
 	while (!simulation_finished(table))
 	{
