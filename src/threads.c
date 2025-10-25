@@ -33,10 +33,10 @@ void	init_philos_threads(t_table *table)
 	{
 		if (table->n_philos == 1)
 			status = pthread_create(&table->philos[i].thread, NULL,
-					lone_philo_routine, (void *) &table->philos[i].thread);
+					lone_philo_routine, (void *) &table->philos[i]);
 		else
 			status = pthread_create(&table->philos[i].thread, NULL,
-					philo_routine, (void *) &table->philos[i].thread);
+					philo_routine, (void *) &table->philos[i]);
 		if (status != 0)
 		{
 			set_bool(&table->table_mutex, &table->thread_failure, TRUE);
@@ -50,15 +50,18 @@ void	init_philos_threads(t_table *table)
 	pthread_mutex_unlock(&table->threads_ready);
 }
 
-// TODO: If monitor fails, it should join all philo threads.
 void	init_monitor_thread(t_table *table)
 {
 	int	status;
+	int	i;
 
 	status = pthread_create(&table->monitor,
 			NULL, monitor, (void *) table);
 	if (status != 0)
 	{
+		i = 0;
+		while (i < table->n_philos)
+			pthread_join(table->philos[i++].thread, NULL);
 		free_table(table);
 		exit_error("Failed to create monitor thread");
 	}
