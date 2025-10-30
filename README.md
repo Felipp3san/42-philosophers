@@ -77,6 +77,14 @@ make clean
 make re
 ```
 
+## Project Structure
+
+```
+.
+├── include/           # Header files
+├── src/               # Source files
+└── build/             # Object files (created after compilation)
+```
 
 ## License
 
