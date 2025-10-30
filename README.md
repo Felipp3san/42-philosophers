@@ -23,8 +23,8 @@ A multithreaded simulation of the **Dining Philosophers Problem** in C, built as
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Felipp3san/philosophers.git
-cd philosophers
+git clone https://github.com/Felipp3san/42-philosophers
+cd 42-philosophers
 ```
 
 2. Compile the project:
